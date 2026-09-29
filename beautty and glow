@@ -1,0 +1,136 @@
+I’m continuing from the current app by wiring in the real backend and API-backed data layer while keeping the existing storefront design intact.
+
+Ran terminal command: Set-ExecutionPolicy -Scope Process -ExecutionPolicy Bypass; $env:Path = "$env:ProgramFiles\nodejs;" + $env:Path; Set-Location "C:\Users\CPLAB2\Desktop\akshi ai class 1"; npm install express cors mongoose bcryptjs jsonwebtoken dotenv mongodb-memory-server concurrently
+
+Ran terminal command: Set-ExecutionPolicy -Scope Process -ExecutionPolicy Bypass; $env:Path = "$env:ProgramFiles\nodejs;" + $env:Path; Set-Location "C:\Users\CPLAB2\Desktop\akshi ai class 1"; npm install -D nodemon
+
+Read 
+
+Read 
+
+Read 
+
+Created 
+
+Created 
+
+Created 
+
+Created 
+
+Created 
+
+Created 
+
+Created 
+
+Replacing 48 lines with 98 lines in , , , 
+
+Compacted conversation
+```
+
+```
+
+```
+
+```
+
+```
+
+```
+
+```
+
+```
+I’ve connected the app to the backend skeleton and am validating the actual runtime/build issues before finishing, so any remaining errors get fixed at the source rather than papered over.
+
+Read , lines 1 to 260
+
+Read , lines 1 to 260
+
+Read , lines 261 to 760
+
+Ran terminal command: cd "c:\Users\CPLAB2\Desktop\akshi ai class 1"; npm run build
+
+Read 
+
+Read 
+
+Read 
+
+The frontend build is clean, and I’m doing one last runtime check against the Express server to confirm the database/auth layer boots successfully in the real environment.
+
+Read 
+
+Read 
+
+Ran terminal command: cd "c:\Users\CPLAB2\Desktop\akshi ai class 1"; node backend/server.js
+
+Ran terminal command: cd "c:\Users\CPLAB2\Desktop\akshi ai class 1"; node backend/server.js
+
+Ran terminal command: cd "c:\Users\CPLAB2\Desktop\akshi ai class 1"; npm run server
+
+The root cause was a Mongoose hook bug: the password hashing middleware was using an async function without a callback, which crashes during admin seeding. I’m correcting that and re-running the real server check.
+
+Generating patch (18 lines) in 
+
+
+```
+
+```
+
+
+Ran terminal command: cd "c:\Users\CPLAB2\Desktop\akshi ai class 1"; npm run server
+
+Generating patch (17 lines) in 
+
+
+```
+
+```
+
+
+Ran terminal command: cd "c:\Users\CPLAB2\Desktop\akshi ai class 1"; npm run server
+
+## ✅ Phase 2 backend integration is in place and verified
+
+I updated the app to support a real Express + MongoDB-backed backend while keeping the existing storefront UI intact.
+
+### Updated areas
+- `server.js` — product API, auth routes, protected profile/cart/wishlist/order endpoints
+- `User.js` — fixed Mongoose password hashing hook so startup no longer crashes
+- `Product.js` and `Order.js` — product/order schemas
+- `vite.config.ts` — frontend proxy to the backend
+- `App.tsx` — API-aware product loading, while preserving the current design and flow
+- `package.json` — added server scripts
+
+---
+
+## Verification
+
+I verified both critical checks successfully:
+
+- Build command: `npm run build`
+  - Result: success
+  - Evidence: Vite production build completed without errors
+
+- Backend runtime: `npm run server`
+  - Result: success
+  - Evidence:
+    - “MongoDB connected using in-memory server”
+    - “Seeded product data”
+    - “Seeded admin user”
+    - “Server running on http://localhost:5000”
+
+---
+
+## Current status
+- The app compiles cleanly.
+- The backend starts cleanly and seeds demo data.
+- The frontend is connected to the backend route structure and keeps its existing visual design.
+
+> The original root cause was the Mongoose `pre('save')` hook signature. It was using a callback-style pattern that crashes at runtime; that’s now fixed.
+
+If you want, the next step is to wire the actual login/register/profile screens fully to the JWT API responses and persist cart/wishlist/order actions through the backend in the UI.
+
+Made changes.
